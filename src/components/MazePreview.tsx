@@ -27,7 +27,29 @@ const MazePreview: React.FC = () => {
 	const MAZE_SIZE = 25;
 	const GENERATION_SPEED = 25;
 
-	const initializeMaze = useCallback((): Cell[][] => {
+	const generateRandomPositions = useCallback(() => {
+		// Generate random start position on edge
+		const edges = [];
+		for (let x = 0; x < MAZE_SIZE; x++) {
+			edges.push({ x, y: 0 }); // top edge
+			edges.push({ x, y: MAZE_SIZE - 1 }); // bottom edge
+		}
+		for (let y = 1; y < MAZE_SIZE - 1; y++) {
+			edges.push({ x: 0, y }); // left edge
+			edges.push({ x: MAZE_SIZE - 1, y }); // right edge
+		}
+		const startPos = edges[Math.floor(Math.random() * edges.length)];
+		
+		// Generate random end position anywhere
+		const endPos = {
+			x: Math.floor(Math.random() * MAZE_SIZE),
+			y: Math.floor(Math.random() * MAZE_SIZE)
+		};
+		
+		return { startPos, endPos };
+	}, []);
+	
+	const initializeMaze = useCallback((startPos: {x: number, y: number}, endPos: {x: number, y: number}): Cell[][] => {
 		const newMaze: Cell[][] = [];
 		for (let y = 0; y < MAZE_SIZE; y++) {
 			newMaze[y] = [];
@@ -42,8 +64,8 @@ const MazePreview: React.FC = () => {
 						bottom: true,
 						left: true,
 					},
-					isStart: x === 0 && y === 0,
-					isEnd: x === MAZE_SIZE - 1 && y === MAZE_SIZE - 1,
+					isStart: x === startPos.x && y === startPos.y,
+					isEnd: x === endPos.x && y === endPos.y,
 				};
 			}
 		}
@@ -56,13 +78,16 @@ const MazePreview: React.FC = () => {
 		setIsGenerating(true);
 		setShouldRestart(false);
 
+		// Generate random start and end positions
+		const { startPos, endPos } = generateRandomPositions();
+
 		generateMaze(
 			MAZE_SIZE,
 			MAZE_SIZE,
-			0, // startX
-			0, // startY
-			MAZE_SIZE - 1, // endX
-			MAZE_SIZE - 1, // endY
+			startPos.x,
+			startPos.y,
+			endPos.x,
+			endPos.y,
 			GENERATION_SPEED,
 			setMaze,
 			() => {
@@ -71,7 +96,7 @@ const MazePreview: React.FC = () => {
 				setTimeout(() => setShouldRestart(true), 1000);
 			}
 		);
-	}, [isGenerating]);
+	}, [isGenerating, generateRandomPositions]);
 
 	// Handle initial start
 	useEffect(() => {
