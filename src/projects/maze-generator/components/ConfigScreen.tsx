@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MazeConfig } from '../types';
+import { getCellStyle } from '../utils/mazeDisplay';
 
 interface ConfigScreenProps {
   config: MazeConfig;
@@ -132,16 +133,32 @@ const ConfigScreen: React.FC<ConfigScreenProps> = ({ config, onConfigComplete })
                   const isEdge = x === 0 || x === width - 1 || y === 0 || y === height - 1;
                   const { cellSize } = getGridCellSize();
                   
-                  let cellClass = "border border-muted cursor-pointer transition-colors duration-150 flex-shrink-0 relative";
-                        
-                  if (isStart) {
-                    cellClass += " bg-green-500";
-                  } else if (isEnd) {
-                    cellClass += " bg-red-500";
-                  } else if (isEdge) {
-                    cellClass += " bg-muted hover:bg-blue-200";
-                  } else {
-                    cellClass += " bg-background hover:bg-red-200";
+                  // Create a cell object that matches the maze cell structure
+                  const cell = {
+                    x,
+                    y,
+                    visited: false,
+                    walls: { top: true, right: true, bottom: true, left: true },
+                    isStart,
+                    isEnd
+                  };
+
+                  let cellClass = "cursor-pointer transition-colors duration-150 flex-shrink-0 relative";
+                  
+                  // Get base styling from shared function
+                  const cellStyle = getCellStyle(cell, {
+                    borderColor: isEdge && !isStart && !isEnd ? "#1f2937" : "#374151"
+                  });
+                  
+                  // Override background colors for non-start/end cells
+                  if (!isStart && !isEnd) {
+                    if (isEdge) {
+                      // Edge pieces: slightly lighter than unvisited for distinction
+                      cellStyle.backgroundColor = "#374151"; // Slightly lighter than unvisited
+                    } else {
+                      // Inner pieces: same as unvisited game cells
+                      cellStyle.backgroundColor = "#1f2937";
+                    }
                   }
                   
                   return (
@@ -149,6 +166,7 @@ const ConfigScreen: React.FC<ConfigScreenProps> = ({ config, onConfigComplete })
                       key={`${x}-${y}`}
                       className={cellClass}
                       style={{
+                        ...cellStyle,
                         width: `${cellSize}px`,
                         height: `${cellSize}px`,
                         minWidth: `${cellSize}px`,

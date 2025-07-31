@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Cell, MazeConfig, GameState, Algorithm } from "../types";
+import { getCellStyle } from "../utils/mazeDisplay";
 
 interface MazeDisplayProps {
 	maze: Cell[][];
@@ -52,54 +53,6 @@ const MazeDisplay: React.FC<MazeDisplayProps> = ({
 		window.addEventListener("resize", handleResize);
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
-	const getCellClassName = (cell: Cell): string => {
-		const baseClass = "relative border-0 transition-colors duration-150";
-		let colorClass = "bg-background";
-
-		// Priority order: Start > End > Solution > User Path > Explored > Background
-		if (cell.isStart) {
-			colorClass = "bg-green-500";
-		} else if (cell.isEnd) {
-			colorClass = "bg-red-500";
-		} else if (cell.isSolution) {
-			colorClass = "bg-yellow-400";
-		} else if (cell.isPath) {
-			colorClass = "bg-blue-400";
-		} else if (cell.isExplored) {
-			colorClass = "bg-purple-300";
-		}
-
-		return `${baseClass} ${colorClass}`;
-	};
-
-	const getCellWallStyles = (cell: Cell): React.CSSProperties => {
-		const style: React.CSSProperties = {};
-
-		const wallColor = "hsl(var(--foreground))";
-
-		if (cell.walls.top) {
-			style.borderTopWidth = "1px";
-			style.borderTopStyle = "solid";
-			style.borderTopColor = wallColor;
-		}
-		if (cell.walls.right) {
-			style.borderRightWidth = "1px";
-			style.borderRightStyle = "solid";
-			style.borderRightColor = wallColor;
-		}
-		if (cell.walls.bottom) {
-			style.borderBottomWidth = "1px";
-			style.borderBottomStyle = "solid";
-			style.borderBottomColor = wallColor;
-		}
-		if (cell.walls.left) {
-			style.borderLeftWidth = "1px";
-			style.borderLeftStyle = "solid";
-			style.borderLeftColor = wallColor;
-		}
-
-		return style;
-	};
 
 	const getCellSize = (): {
 		className: string;
@@ -129,7 +82,7 @@ const MazeDisplay: React.FC<MazeDisplayProps> = ({
 		// Use inline styles for precise control
 		return {
 			className:
-				"border border-muted cursor-pointer transition-colors duration-150 flex-shrink-0 relative",
+				"cursor-pointer transition-colors duration-150 flex-shrink-0 relative",
 			style: {
 				width: `${cellSize}px`,
 				height: `${cellSize}px`,
@@ -313,11 +266,9 @@ const MazeDisplay: React.FC<MazeDisplayProps> = ({
 							{row.map((cell, x) => (
 								<div
 									key={`${x}-${y}`}
-									className={`${cellSizeConfig.className} ${getCellClassName(
-										cell
-									)} ${!cellSizeConfig.style ? "cursor-pointer" : ""}`}
+									className={`${cellSizeConfig.className} ${!cellSizeConfig.style ? "cursor-pointer" : ""}`}
 									style={{
-										...getCellWallStyles(cell),
+										...getCellStyle(cell),
 										...cellSizeConfig.style,
 										cursor: "pointer",
 									}}

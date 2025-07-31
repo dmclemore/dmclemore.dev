@@ -9,7 +9,8 @@ export const generateMaze = (
 	endY: number,
 	speed: number,
 	setMaze: (maze: Cell[][]) => void,
-	onComplete: () => void
+	onComplete: () => void,
+	onStep?: (maze: Cell[][]) => void
 ): void => {
 	const maze: Cell[][] = [];
 
@@ -94,7 +95,6 @@ export const generateMaze = (
 		}
 	};
 
-
 	const generateStep = (): void => {
 		if (stack.length === 0) {
 			onComplete();
@@ -122,6 +122,7 @@ export const generateMaze = (
 		}
 
 		setMaze([...maze]);
+		if (onStep) onStep([...maze]);
 		setTimeout(generateStep, speed);
 	};
 
