@@ -215,11 +215,11 @@ const MazePreview: React.FC = () => {
 		<div className="relative w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg overflow-hidden">
 			{/* Animated maze grid */}
 			<div className="absolute inset-0 flex items-center justify-center">
-				<div 
+				<div
 					className="grid grid-rows-25 grid-cols-25 gap-0 bg-gray-800"
 					style={{
-						height: '100%',
-						aspectRatio: '1'
+						height: "100%",
+						aspectRatio: "1",
 					}}
 				>
 					{maze.map((row, y) =>
@@ -257,20 +257,6 @@ const MazePreview: React.FC = () => {
 					<Play className="h-8 w-8 text-gray-700 ml-1" />
 				</div>
 			</div>
-
-			{/* Title overlay */}
-			<div className="absolute bottom-4 left-4 right-4">
-				<div className="bg-black/50 text-white px-3 py-2 rounded text-sm font-medium backdrop-blur-sm">
-					{isGenerating ? "Generating Maze..." : "Maze Generation Preview"}
-				</div>
-			</div>
-
-			{/* Generation indicator */}
-			{isGenerating && (
-				<div className="absolute top-4 right-4">
-					<div className="animate-spin rounded-full h-6 w-6 border-2 border-white border-t-transparent"></div>
-				</div>
-			)}
 		</div>
 	);
 };
