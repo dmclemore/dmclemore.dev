@@ -214,8 +214,14 @@ const MazePreview: React.FC = () => {
 	return (
 		<div className="relative w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg overflow-hidden">
 			{/* Animated maze grid */}
-			<div className="absolute inset-0 p-2">
-				<div className="w-full h-full grid grid-rows-25 grid-cols-25 gap-0">
+			<div className="absolute inset-0 flex items-center justify-center">
+				<div 
+					className="grid grid-rows-25 grid-cols-25 gap-0 bg-gray-800"
+					style={{
+						height: '100%',
+						aspectRatio: '1'
+					}}
+				>
 					{maze.map((row, y) =>
 						row.map((cell, x) => (
 							<div

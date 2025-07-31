@@ -78,22 +78,22 @@ const MazeDisplay: React.FC<MazeDisplayProps> = ({
 		const wallColor = "hsl(var(--foreground))";
 
 		if (cell.walls.top) {
-			style.borderTopWidth = "2px";
+			style.borderTopWidth = "1px";
 			style.borderTopStyle = "solid";
 			style.borderTopColor = wallColor;
 		}
 		if (cell.walls.right) {
-			style.borderRightWidth = "2px";
+			style.borderRightWidth = "1px";
 			style.borderRightStyle = "solid";
 			style.borderRightColor = wallColor;
 		}
 		if (cell.walls.bottom) {
-			style.borderBottomWidth = "2px";
+			style.borderBottomWidth = "1px";
 			style.borderBottomStyle = "solid";
 			style.borderBottomColor = wallColor;
 		}
 		if (cell.walls.left) {
-			style.borderLeftWidth = "2px";
+			style.borderLeftWidth = "1px";
 			style.borderLeftStyle = "solid";
 			style.borderLeftColor = wallColor;
 		}
