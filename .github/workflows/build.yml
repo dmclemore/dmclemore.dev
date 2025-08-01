@@ -2,9 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: ['**']
+    branches: ["**"]
   pull_request:
-    branches: ['**']
+    branches: ["**"]
 
 jobs:
   build:
@@ -18,8 +18,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'yarn'
+          node-version: "18"
+          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -29,34 +29,3 @@ jobs:
 
       - name: Build application
         run: yarn build
-
-  build-main:
-    name: Build Main Branch
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    needs: build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build for production
-        run: yarn build
-
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: |
-            .next/
-            out/
-          retention-days: 30
