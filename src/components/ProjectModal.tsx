@@ -66,11 +66,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 							ease: [0.4, 0.0, 0.2, 1],
 						}}
 						className="relative w-full h-full max-w-7xl max-h-[95vh] bg-background rounded-lg shadow-2xl overflow-hidden m-4 flex flex-col"
-						onClick={(e) => e.stopPropagation()}
+						onClick={e => e.stopPropagation()}
 					>
 						{/* Header */}
 						<div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-background/95 backdrop-blur-sm flex-shrink-0">
-							<h2 className="text-xl sm:text-2xl font-bold text-foreground">{title}</h2>
+							<h2 className="text-xl sm:text-2xl font-bold text-foreground">
+								{title}
+							</h2>
 							<button
 								onClick={onClose}
 								className="p-2 rounded-full hover:bg-secondary transition-colors duration-200"

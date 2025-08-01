@@ -39,38 +39,44 @@ const MazePreview: React.FC = () => {
 			edges.push({ x: MAZE_SIZE - 1, y }); // right edge
 		}
 		const startPos = edges[Math.floor(Math.random() * edges.length)];
-		
+
 		// Generate random end position anywhere
 		const endPos = {
 			x: Math.floor(Math.random() * MAZE_SIZE),
-			y: Math.floor(Math.random() * MAZE_SIZE)
+			y: Math.floor(Math.random() * MAZE_SIZE),
 		};
-		
+
 		return { startPos, endPos };
 	}, []);
-	
-	const initializeMaze = useCallback((startPos: {x: number, y: number}, endPos: {x: number, y: number}): Cell[][] => {
-		const newMaze: Cell[][] = [];
-		for (let y = 0; y < MAZE_SIZE; y++) {
-			newMaze[y] = [];
-			for (let x = 0; x < MAZE_SIZE; x++) {
-				newMaze[y][x] = {
-					x,
-					y,
-					visited: false,
-					walls: {
-						top: true,
-						right: true,
-						bottom: true,
-						left: true,
-					},
-					isStart: x === startPos.x && y === startPos.y,
-					isEnd: x === endPos.x && y === endPos.y,
-				};
+
+	const initializeMaze = useCallback(
+		(
+			startPos: { x: number; y: number },
+			endPos: { x: number; y: number }
+		): Cell[][] => {
+			const newMaze: Cell[][] = [];
+			for (let y = 0; y < MAZE_SIZE; y++) {
+				newMaze[y] = [];
+				for (let x = 0; x < MAZE_SIZE; x++) {
+					newMaze[y][x] = {
+						x,
+						y,
+						visited: false,
+						walls: {
+							top: true,
+							right: true,
+							bottom: true,
+							left: true,
+						},
+						isStart: x === startPos.x && y === startPos.y,
+						isEnd: x === endPos.x && y === endPos.y,
+					};
+				}
 			}
-		}
-		return newMaze;
-	}, []);
+			return newMaze;
+		},
+		[]
+	);
 
 	const startMazeGeneration = useCallback(() => {
 		if (isGenerating) return;
