@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Play, Code } from "lucide-react";
-import { ReactNode } from "react";
+import { ExternalLink, Github, Play } from "lucide-react";
+import { ReactNode, useState } from "react";
+import MazeGenerator from "../projects/maze-generator";
+import ProjectModal from "./ProjectModal";
+import MazePreview from "./MazePreview";
 
 interface Project {
 	id: string;
@@ -14,28 +17,23 @@ interface Project {
 	liveUrl?: string;
 	embedComponent?: ReactNode;
 	image?: string;
+	previewGif?: ReactNode;
 	featured?: boolean;
 }
 
 // Placeholder projects - these will be replaced with actual projects
 const projects: Project[] = [
 	{
-		id: "algorithm-visualizer",
-		title: "Algorithm Visualizer",
+		id: "maze-generator",
+		title: "Maze Generator & Solver",
 		description:
-			"Interactive visualization of sorting and pathfinding algorithms with step-by-step animations.",
+			"Interactive maze generator using recursive backtracking with manual solving and AI pathfinding algorithms (A* and BFS).",
 		type: "embedded",
-		technologies: ["React", "TypeScript", "Canvas API", "Framer Motion"],
-		githubUrl: "https://github.com/dmclemore/algorithm-visualizer",
+		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
+		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
 		featured: true,
-		embedComponent: (
-			<div className="w-full h-64 bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center border-2 border-dashed border-border">
-				<div className="text-center">
-					<Code className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-					<p className="text-muted-foreground">Interactive Demo Coming Soon</p>
-				</div>
-			</div>
-		),
+		embedComponent: <MazeGenerator />,
+		previewGif: <MazePreview />,
 	},
 	{
 		id: "task-manager",
@@ -124,7 +122,13 @@ const itemVariants = {
 	},
 };
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ 
+	project, 
+	onOpenModal 
+}: { 
+	project: Project;
+	onOpenModal: (project: Project) => void;
+}) {
 	const isEmbedded = project.type === "embedded";
 
 	return (
@@ -135,9 +139,26 @@ function ProjectCard({ project }: { project: Project }) {
 			}`}
 		>
 			{/* Project Preview */}
-			<div className="aspect-video bg-muted/30 relative overflow-hidden">
-				{isEmbedded ? (
-					<div className="p-4 h-full">{project.embedComponent}</div>
+			<div className="aspect-video bg-muted/30 relative overflow-hidden group">
+				{isEmbedded && project.previewGif ? (
+					<div 
+						className="w-full h-full cursor-pointer"
+						onClick={() => onOpenModal(project)}
+					>
+						{project.previewGif}
+					</div>
+				) : isEmbedded ? (
+					<div 
+						className="p-4 h-full cursor-pointer"
+						onClick={() => onOpenModal(project)}
+					>
+						<div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center border-2 border-dashed border-border">
+							<div className="text-center">
+								<Play className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
+								<p className="text-muted-foreground">Click to try interactive demo</p>
+							</div>
+						</div>
+					</div>
 				) : (
 					<div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
 						<div className="text-center">
@@ -215,6 +236,16 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export function ProjectsSection() {
+	const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+	const handleOpenModal = (project: Project) => {
+		setSelectedProject(project);
+	};
+
+	const handleCloseModal = () => {
+		setSelectedProject(null);
+	};
+
 	return (
 		<section id="projects" className="py-20 bg-muted/30">
 			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -242,7 +273,11 @@ export function ProjectsSection() {
 					className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
 				>
 					{projects.map(project => (
-						<ProjectCard key={project.id} project={project} />
+						<ProjectCard 
+							key={project.id} 
+							project={project} 
+							onOpenModal={handleOpenModal}
+						/>
 					))}
 				</motion.div>
 
@@ -268,6 +303,15 @@ export function ProjectsSection() {
 					</a>
 				</motion.div>
 			</div>
+
+			{/* Project Modal */}
+			<ProjectModal
+				isOpen={selectedProject !== null}
+				onClose={handleCloseModal}
+				title={selectedProject?.title || ""}
+			>
+				{selectedProject?.embedComponent}
+			</ProjectModal>
 		</section>
 	);
 }

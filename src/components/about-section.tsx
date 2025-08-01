@@ -86,7 +86,7 @@ export function AboutSection() {
 
 						<div className="bg-background rounded-lg p-6 border border-border">
 							<div className="flex items-center space-x-3 mb-4">
-								<MapPin className="h-5 w-5 text-secondary-foreground" />
+								<MapPin className="h-5 w-5 text-accent" />
 								<span className="font-medium text-foreground">Location</span>
 							</div>
 							<p className="text-muted-foreground">Seattle, Washington</p>
