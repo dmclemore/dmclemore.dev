@@ -61,6 +61,9 @@ export const generateMaze = (
 		return openCount;
 	};
 
+	// Business rule: The start and end cells of the maze should have only one opening (one wall removed).
+	// This ensures that the maze has a unique entry and exit point, which is important for solvability
+	// and game design. Prevent removing additional walls from start/end cells beyond their single opening.
 	const wouldViolateStartEndRule = (current: Cell, next: Cell): boolean => {
 		// Check if removing this wall would give start or end cell more than 1 opening
 		const isCurrentStartOrEnd = current.isStart || current.isEnd;
