@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Cell, MazeConfig, GameState, Algorithm } from "../types";
 import { getCellStyle } from "../utils/mazeDisplay";
 
@@ -90,7 +90,7 @@ const MazeDisplay: React.FC<MazeDisplayProps> = ({
 				minHeight: `${cellSize}px`,
 			},
 		};
-	};
+	}, [config.width, config.height, windowSize]);
 
 	const renderControls = () => {
 		if (gameState === "generating") {
@@ -266,7 +266,9 @@ const MazeDisplay: React.FC<MazeDisplayProps> = ({
 							{row.map((cell, x) => (
 								<div
 									key={`${x}-${y}`}
-									className={`${cellSizeConfig.className} ${!cellSizeConfig.style ? "cursor-pointer" : ""}`}
+									className={`${cellSizeConfig.className} ${
+										!cellSizeConfig.style ? "cursor-pointer" : ""
+									}`}
 									style={{
 										...getCellStyle(cell),
 										...cellSizeConfig.style,
