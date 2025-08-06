@@ -54,7 +54,7 @@ const MazeDisplay: React.FC<MazeDisplayProps> = ({
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	const getCellSize = (): {
+	const getCellSize = useCallback((): {
 		className: string;
 		style?: React.CSSProperties;
 	} => {
