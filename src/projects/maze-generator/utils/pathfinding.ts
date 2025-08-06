@@ -277,7 +277,7 @@ export const solveMazeBFS = (
 			current = current.parent;
 		}
 
-		// Get the current maze state with all explored paths from the React component
+		// Retrieve the current maze state, including all explored paths, using the provided function
 		const mazeWithExplored = getCurrentMaze ? getCurrentMaze() : maze;
 
 		// Animate the solution path step by step
