@@ -39,13 +39,12 @@ export function SectionCard({ children, className = '' }: SectionCardProps) {
     <div
       ref={cardRef}
       className={`
-        bg-white rounded-lg shadow-md border border-gray-200 p-6
+        bg-background rounded-lg shadow-md border border-border p-6
         transition-all duration-500 ease-out
         ${isVisible 
           ? 'opacity-100 translate-y-0' 
           : 'opacity-0 translate-y-8'
         }
-        dark:bg-gray-800 dark:border-gray-700
         ${className}
       `}
     >
