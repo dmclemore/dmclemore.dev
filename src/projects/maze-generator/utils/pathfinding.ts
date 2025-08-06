@@ -92,7 +92,7 @@ export const solveMazeAStar = (
 			current = current.parent;
 		}
 
-		// Get the current maze state with all explored paths from the React component
+		// Retrieve the current maze state by calling getCurrentMaze if provided, otherwise use the maze parameter
 		const mazeWithExplored = getCurrentMaze ? getCurrentMaze() : maze;
 
 		// Animate the solution path step by step
