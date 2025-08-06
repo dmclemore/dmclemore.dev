@@ -1,5 +1,59 @@
 import { Cell, Position, PathfindingNode } from "../types";
 
+export const reconstructPath = (
+	node: PathfindingNode,
+	maze: Cell[][],
+	onComplete: () => void,
+	speed: number,
+	setMaze: (maze: Cell[][]) => void,
+	getCurrentMaze?: () => Cell[][]
+): void => {
+	const path: Position[] = [];
+	let current: PathfindingNode | null = node;
+
+	while (current) {
+		path.unshift({ x: current.x, y: current.y });
+		current = current.parent;
+	}
+
+	// Retrieve the current maze state by calling getCurrentMaze if provided, otherwise use the maze parameter
+	const mazeWithExplored = getCurrentMaze ? getCurrentMaze() : maze;
+
+	// Animate the solution path step by step
+	let pathIndex = 0;
+	const animateSolution = (): void => {
+		if (pathIndex >= path.length) {
+			// Animation complete, wait a bit then finish
+			setTimeout(() => {
+				onComplete();
+			}, 1000);
+			return;
+		}
+
+		const currentPos = path[pathIndex];
+		const newMaze = mazeWithExplored.map(row =>
+			row.map(cell => {
+				// Preserve explored state and add solution markers progressively
+				const isSolution = path
+					.slice(0, pathIndex + 1)
+					.some(pos => pos.x === cell.x && pos.y === cell.y);
+				return {
+					...cell,
+					isSolution,
+					// Keep the existing isExplored state from the captured maze
+				};
+			})
+		);
+
+		setMaze(newMaze);
+		pathIndex++;
+		setTimeout(animateSolution, speed * 2); // Slower animation for solution path
+	};
+
+	// Start solution animation after a brief pause
+	setTimeout(animateSolution, 500);
+};
+
 export const solveMazeAStar = (
 	maze: Cell[][],
 	start: Position,
@@ -83,51 +137,6 @@ export const solveMazeAStar = (
 		return neighbors;
 	};
 
-	const reconstructPath = (node: PathfindingNode): void => {
-		const path: Position[] = [];
-		let current: PathfindingNode | null = node;
-
-		while (current) {
-			path.unshift({ x: current.x, y: current.y });
-			current = current.parent;
-		}
-
-		// Retrieve the current maze state by calling getCurrentMaze if provided, otherwise use the maze parameter
-		const mazeWithExplored = getCurrentMaze ? getCurrentMaze() : maze;
-
-		// Animate the solution path step by step
-		let pathIndex = 0;
-		const animateSolution = (): void => {
-			if (pathIndex >= path.length) {
-				// Animation complete, wait a bit then finish
-				setTimeout(() => {
-					onComplete();
-				}, 1000);
-				return;
-			}
-
-			const currentPos = path[pathIndex];
-			const newMaze = mazeWithExplored.map(row =>
-				row.map(cell => {
-					// Preserve explored state and add solution markers progressively
-					const isSolution = path.slice(0, pathIndex + 1).some(pos => pos.x === cell.x && pos.y === cell.y);
-					return {
-						...cell,
-						isSolution,
-						// Keep the existing isExplored state from the captured maze
-					};
-				})
-			);
-
-			setMaze(newMaze);
-			pathIndex++;
-			setTimeout(animateSolution, speed * 2); // Slower animation for solution path
-		};
-
-		// Start solution animation after a brief pause
-		setTimeout(animateSolution, 500);
-	};
-
 	const solveStep = (): void => {
 		if (openSet.length === 0) {
 			onComplete();
@@ -149,7 +158,14 @@ export const solveMazeAStar = (
 			if (onSolutionFound) {
 				onSolutionFound();
 			}
-			reconstructPath(current);
+			reconstructPath(
+				current,
+				maze,
+				onComplete,
+				speed,
+				setMaze,
+				getCurrentMaze
+			);
 			return;
 		}
 
@@ -268,51 +284,6 @@ export const solveMazeBFS = (
 		return neighbors;
 	};
 
-	const reconstructPath = (node: PathfindingNode): void => {
-		const path: Position[] = [];
-		let current: PathfindingNode | null = node;
-
-		while (current) {
-			path.unshift({ x: current.x, y: current.y });
-			current = current.parent;
-		}
-
-		// Retrieve the current maze state, including all explored paths, using the provided function
-		const mazeWithExplored = getCurrentMaze ? getCurrentMaze() : maze;
-
-		// Animate the solution path step by step
-		let pathIndex = 0;
-		const animateSolution = (): void => {
-			if (pathIndex >= path.length) {
-				// Animation complete, wait a bit then finish
-				setTimeout(() => {
-					onComplete();
-				}, 1000);
-				return;
-			}
-
-			const currentPos = path[pathIndex];
-			const newMaze = mazeWithExplored.map(row =>
-				row.map(cell => {
-					// Preserve explored state and add solution markers progressively
-					const isSolution = path.slice(0, pathIndex + 1).some(pos => pos.x === cell.x && pos.y === cell.y);
-					return {
-						...cell,
-						isSolution,
-						// Keep the existing isExplored state from the captured maze
-					};
-				})
-			);
-
-			setMaze(newMaze);
-			pathIndex++;
-			setTimeout(animateSolution, speed * 2); // Slower animation for solution path
-		};
-
-		// Start solution animation after a brief pause
-		setTimeout(animateSolution, 500);
-	};
-
 	const solveStep = (): void => {
 		if (queue.length === 0) {
 			onComplete();
@@ -325,7 +296,14 @@ export const solveMazeBFS = (
 			if (onSolutionFound) {
 				onSolutionFound();
 			}
-			reconstructPath(current);
+			reconstructPath(
+				current,
+				maze,
+				onComplete,
+				speed,
+				setMaze,
+				getCurrentMaze
+			);
 			return;
 		}
 
