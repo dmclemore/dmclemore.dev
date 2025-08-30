@@ -7,7 +7,15 @@ export default function ProjectsPage() {
 	const router = useRouter();
 
 	useEffect(() => {
-		router.replace("/#projects");
+		// Redirect to home page and scroll to projects section
+		router.replace("/");
+		// Small delay to ensure page loads before scrolling
+		setTimeout(() => {
+			const projectsSection = document.getElementById("projects");
+			if (projectsSection) {
+				projectsSection.scrollIntoView({ behavior: "smooth" });
+			}
+		}, 100);
 	}, [router]);
 
 	return (
