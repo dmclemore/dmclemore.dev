@@ -9,6 +9,11 @@ const TitleScreen: React.FC<TitleScreenProps> = ({ onStart }) => {
 		<div className="flex flex-col items-center justify-center h-full bg-background p-4">
 			<div className="text-center p-6 sm:p-8 max-w-4xl mx-auto">
 				<div className="bg-muted/20 rounded-lg p-8 mb-10">
+					{/* Title - Only visible on start screen */}
+					<h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
+						Maze Generator & Solver
+					</h1>
+					
 					<p className="text-muted-foreground mb-8 leading-relaxed text-lg sm:text-xl max-w-3xl mx-auto">
 						Interactive maze generator using recursive backtracking with manual solving 
 						and AI pathfinding algorithms (A* and BFS). Challenge yourself by solving 
