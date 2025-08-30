@@ -9,8 +9,17 @@ import VictoryScreen from "./components/VictoryScreen";
 import { generateMaze } from "./utils";
 import { solveMazeAStar, solveMazeBFS } from "./utils/pathfinding";
 
-const MazeGenerator: React.FC = () => {
+interface MazeGeneratorProps {
+	onGameStateChange?: (gameState: GameState) => void;
+}
+
+const MazeGenerator: React.FC<MazeGeneratorProps> = ({ onGameStateChange }) => {
 	const [gameState, setGameState] = useState<GameState>("title");
+
+	// Notify parent component of game state changes
+	useEffect(() => {
+		onGameStateChange?.(gameState);
+	}, [gameState, onGameStateChange]);
 	const [maze, setMaze] = useState<Cell[][]>([]);
 	const [config, setConfig] = useState<MazeConfig>({
 		width: 15,
@@ -360,6 +369,7 @@ const MazeGenerator: React.FC = () => {
 		};
 	}, [handleKeyDown, handleMouseUp]);
 
+
 	const renderCurrentScreen = () => {
 		switch (gameState) {
 			case "title":
@@ -414,10 +424,14 @@ const MazeGenerator: React.FC = () => {
 		}
 	};
 
+	const isStartScreen = gameState === "title";
+
 	return (
 		<div className="w-full h-full flex flex-col bg-background">
-			<div className="flex-1 overflow-auto p-2 sm:p-4">
-				{renderCurrentScreen()}
+			<div className="flex-1 overflow-auto">
+				<div className={isStartScreen ? "" : "p-2 sm:p-4"}>
+					{renderCurrentScreen()}
+				</div>
 			</div>
 		</div>
 	);

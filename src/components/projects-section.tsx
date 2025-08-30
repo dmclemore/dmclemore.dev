@@ -2,9 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ExternalLink, Github, Play } from "lucide-react";
-import { ReactNode, useState } from "react";
-import MazeGenerator from "../projects/maze-generator";
-import ProjectModal from "./ProjectModal";
+import { ReactNode } from "react";
+import Link from "next/link";
 import MazePreview from "./MazePreview";
 
 interface Project {
@@ -15,13 +14,11 @@ interface Project {
 	technologies: string[];
 	githubUrl?: string;
 	liveUrl?: string;
-	embedComponent?: ReactNode;
 	image?: string;
 	previewGif?: ReactNode;
 	featured?: boolean;
 }
 
-// Placeholder projects - these will be replaced with actual projects
 const projects: Project[] = [
 	{
 		id: "maze-generator",
@@ -32,74 +29,7 @@ const projects: Project[] = [
 		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
 		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
 		featured: true,
-		embedComponent: <MazeGenerator />,
 		previewGif: <MazePreview />,
-	},
-	{
-		id: "task-manager",
-		title: "Task Management System",
-		description:
-			"Full-stack task management application with real-time collaboration and advanced filtering.",
-		type: "external",
-		technologies: ["Next.js", "PostgreSQL", "Prisma", "tRPC", "Tailwind CSS"],
-		githubUrl: "https://github.com/dmclemore/task-manager",
-		liveUrl: "https://tasks.dmclemore.dev",
-		image: "/placeholder-project.jpg",
-	},
-	{
-		id: "data-structures",
-		title: "Data Structures Playground",
-		description:
-			"Interactive educational tool for learning data structures with visual representations.",
-		type: "embedded",
-		technologies: ["React", "TypeScript", "D3.js", "Tailwind CSS"],
-		githubUrl: "https://github.com/dmclemore/data-structures",
-		embedComponent: (
-			<div className="w-full h-64 bg-gradient-to-br from-secondary/30 to-muted/30 rounded-lg flex items-center justify-center border-2 border-dashed border-border">
-				<div className="text-center">
-					<Play className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-					<p className="text-muted-foreground">Interactive Demo Coming Soon</p>
-				</div>
-			</div>
-		),
-	},
-	{
-		id: "api-gateway",
-		title: "Microservices API Gateway",
-		description:
-			"Scalable API gateway with authentication, rate limiting, and service discovery.",
-		type: "external",
-		technologies: ["Node.js", "Express", "Redis", "Docker", "AWS"],
-		githubUrl: "https://github.com/dmclemore/api-gateway",
-		image: "/placeholder-project.jpg",
-	},
-	{
-		id: "game-engine",
-		title: "2D Game Engine",
-		description:
-			"Lightweight 2D game engine built from scratch with physics and collision detection.",
-		type: "embedded",
-		technologies: ["TypeScript", "Canvas API", "WebGL", "Physics Engine"],
-		githubUrl: "https://github.com/dmclemore/game-engine",
-		embedComponent: (
-			<div className="w-full h-64 bg-gradient-to-br from-accent/10 to-primary/10 rounded-lg flex items-center justify-center border-2 border-dashed border-border">
-				<div className="text-center">
-					<Play className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-					<p className="text-muted-foreground">Interactive Demo Coming Soon</p>
-				</div>
-			</div>
-		),
-	},
-	{
-		id: "analytics-dashboard",
-		title: "Analytics Dashboard",
-		description:
-			"Real-time analytics dashboard with customizable widgets and data visualization.",
-		type: "external",
-		technologies: ["React", "Chart.js", "Node.js", "MongoDB", "WebSocket"],
-		githubUrl: "https://github.com/dmclemore/analytics-dashboard",
-		liveUrl: "https://analytics.dmclemore.dev",
-		image: "/placeholder-project.jpg",
 	},
 ];
 
@@ -122,13 +52,7 @@ const itemVariants = {
 	},
 };
 
-function ProjectCard({ 
-	project, 
-	onOpenModal 
-}: { 
-	project: Project;
-	onOpenModal: (project: Project) => void;
-}) {
+function ProjectCard({ project }: { project: Project }) {
 	const isEmbedded = project.type === "embedded";
 
 	return (
@@ -139,48 +63,46 @@ function ProjectCard({
 			}`}
 		>
 			{/* Project Preview */}
-			<div className="aspect-video bg-muted/30 relative overflow-hidden group">
-				{isEmbedded && project.previewGif ? (
-					<div 
-						className="w-full h-full cursor-pointer"
-						onClick={() => onOpenModal(project)}
-					>
-						{project.previewGif}
-					</div>
-				) : isEmbedded ? (
-					<div 
-						className="p-4 h-full cursor-pointer"
-						onClick={() => onOpenModal(project)}
-					>
-						<div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center border-2 border-dashed border-border">
-							<div className="text-center">
-								<Play className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-								<p className="text-muted-foreground">Click to try interactive demo</p>
+			<Link href={isEmbedded ? `/projects/${project.id}` : project.liveUrl || '#'} className="block">
+				<div className="aspect-video bg-muted/30 relative overflow-hidden group hover:bg-muted/40 transition-colors">
+					{isEmbedded && project.previewGif ? (
+						<div className="w-full h-full">
+							{project.previewGif}
+						</div>
+					) : isEmbedded ? (
+						<div className="p-4 h-full">
+							<div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center border-2 border-dashed border-border group-hover:border-primary/40 transition-colors">
+								<div className="text-center">
+									<Play className="h-12 w-12 text-muted-foreground group-hover:text-primary mx-auto mb-2 transition-colors" />
+									<p className="text-muted-foreground group-hover:text-foreground transition-colors">
+										Click to try interactive demo
+									</p>
+								</div>
 							</div>
 						</div>
-					</div>
-				) : (
-					<div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-						<div className="text-center">
-							<ExternalLink className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-							<p className="text-muted-foreground">External Project</p>
+					) : (
+						<div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+							<div className="text-center">
+								<ExternalLink className="h-12 w-12 text-muted-foreground group-hover:text-primary mx-auto mb-2 transition-colors" />
+								<p className="text-muted-foreground group-hover:text-foreground transition-colors">External Project</p>
+							</div>
 						</div>
-					</div>
-				)}
+					)}
 
-				{/* Project Type Badge */}
-				<div className="absolute top-4 right-4">
-					<span
-						className={`px-3 py-1 rounded-full text-xs font-medium ${
-							isEmbedded
-								? "bg-primary/10 text-primary border border-primary/20"
-								: "bg-accent/10 text-accent border border-accent/20"
-						}`}
-					>
-						{isEmbedded ? "Try it now" : "View project"}
-					</span>
+					{/* Project Type Badge */}
+					<div className="absolute top-4 right-4">
+						<span
+							className={`px-3 py-1 rounded-full text-xs font-medium ${
+								isEmbedded
+									? "bg-primary/10 text-primary border border-primary/20"
+									: "bg-accent/10 text-accent border border-accent/20"
+							}`}
+						>
+							{isEmbedded ? "Try it now" : "View project"}
+						</span>
+					</div>
 				</div>
-			</div>
+			</Link>
 
 			{/* Project Info */}
 			<div className="p-6">
@@ -218,7 +140,15 @@ function ProjectCard({
 						</a>
 					)}
 
-					{project.liveUrl && (
+					{isEmbedded ? (
+						<Link
+							href={`/projects/${project.id}`}
+							className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md text-sm font-medium"
+						>
+							<Play className="h-4 w-4" />
+							<span>Try Demo</span>
+						</Link>
+					) : project.liveUrl && (
 						<a
 							href={project.liveUrl}
 							target="_blank"
@@ -236,16 +166,6 @@ function ProjectCard({
 }
 
 export function ProjectsSection() {
-	const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-	const handleOpenModal = (project: Project) => {
-		setSelectedProject(project);
-	};
-
-	const handleCloseModal = () => {
-		setSelectedProject(null);
-	};
-
 	return (
 		<section id="projects" className="py-20 bg-muted/30">
 			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -270,13 +190,12 @@ export function ProjectsSection() {
 					initial="hidden"
 					whileInView="visible"
 					viewport={{ once: true }}
-					className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+					className={`grid gap-6 ${projects.length === 1 ? 'justify-center' : 'md:grid-cols-2 lg:grid-cols-3'}`}
 				>
 					{projects.map(project => (
 						<ProjectCard 
 							key={project.id} 
 							project={project} 
-							onOpenModal={handleOpenModal}
 						/>
 					))}
 				</motion.div>
@@ -303,15 +222,6 @@ export function ProjectsSection() {
 					</a>
 				</motion.div>
 			</div>
-
-			{/* Project Modal */}
-			<ProjectModal
-				isOpen={selectedProject !== null}
-				onClose={handleCloseModal}
-				title={selectedProject?.title || ""}
-			>
-				{selectedProject?.embedComponent}
-			</ProjectModal>
 		</section>
 	);
 }
