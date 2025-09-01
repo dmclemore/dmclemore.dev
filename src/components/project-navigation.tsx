@@ -4,20 +4,39 @@ import { motion } from "framer-motion";
 import { ThemeToggle } from "./theme-toggle";
 import { ArrowLeft, Github } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface ProjectNavigationProps {
 	projectTitle?: string;
 	githubUrl?: string;
 	onStartOver?: () => void;
 	showStartOver?: boolean;
+	showTitle?: boolean;
 }
 
-export function ProjectNavigation({ 
-	projectTitle, 
-	githubUrl, 
-	onStartOver, 
-	showStartOver = false 
+export function ProjectNavigation({
+	projectTitle,
+	githubUrl,
+	onStartOver,
+	showStartOver = false,
+	showTitle = true,
 }: ProjectNavigationProps) {
+	const [isLargeScreen, setIsLargeScreen] = useState(false);
+
+	useEffect(() => {
+		const checkScreenSize = () => {
+			setIsLargeScreen(window.innerWidth >= 640); // sm breakpoint
+		};
+
+		checkScreenSize();
+		window.addEventListener('resize', checkScreenSize);
+		return () => window.removeEventListener('resize', checkScreenSize);
+	}, []);
+
+	const scrollToProjects = () => {
+		window.location.href = '/projects';
+	};
+
 	return (
 		<nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-sm border-b border-border">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,21 +47,21 @@ export function ProjectNavigation({
 						animate={{ opacity: 1, x: 0 }}
 						className="flex-shrink-0"
 					>
-						<Link
-							href="/#projects"
+						<button
+							onClick={scrollToProjects}
 							className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
 						>
 							<ArrowLeft className="h-4 w-4" />
 							<span>Back to Projects</span>
-						</Link>
+						</button>
 					</motion.div>
 
 					{/* Center: Project Title */}
-					{projectTitle && (
+					{projectTitle && showTitle && (
 						<motion.div
 							initial={{ opacity: 0, y: -10 }}
 							animate={{ opacity: 1, y: 0 }}
-							className="absolute left-1/2 transform -translate-x-1/2"
+							className="absolute left-1/2 transform -translate-x-1/2 hidden md:block"
 						>
 							<h1 className="text-lg font-semibold text-foreground">
 								{projectTitle}
@@ -56,11 +75,11 @@ export function ProjectNavigation({
 						animate={{ opacity: 1, y: 0 }}
 						className="flex items-center space-x-3"
 					>
-						{/* Start Over Button */}
+						{/* Start Over Button - Hidden on mobile */}
 						{showStartOver && onStartOver && (
 							<button
 								onClick={onStartOver}
-								className="px-3 py-1.5 bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors rounded text-sm font-medium"
+								className="hidden md:block px-3 py-1.5 bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors rounded text-sm font-medium"
 							>
 								Start Over
 							</button>
@@ -75,7 +94,7 @@ export function ProjectNavigation({
 								className="flex items-center space-x-1.5 px-3 py-1.5 bg-secondary hover:bg-accent hover:text-accent-foreground transition-colors rounded text-sm font-medium"
 							>
 								<Github className="h-4 w-4" />
-								<span>Code</span>
+								{isLargeScreen && <span>Code</span>}
 							</a>
 						)}
 
@@ -83,6 +102,26 @@ export function ProjectNavigation({
 					</motion.div>
 				</div>
 			</div>
+
+			{/* Mobile Start Over Button - Below nav */}
+			{showStartOver && onStartOver && (
+				<motion.div
+					initial={{ opacity: 0, y: -10 }}
+					animate={{ opacity: 1, y: 0 }}
+					className="md:hidden bg-background/80 backdrop-blur-sm border-b border-border"
+				>
+					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+						<div className="py-3">
+							<button
+								onClick={onStartOver}
+								className="w-full px-4 py-2 bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors rounded text-sm font-medium"
+							>
+								Start Over
+							</button>
+						</div>
+					</div>
+				</motion.div>
+			)}
 		</nav>
 	);
 }

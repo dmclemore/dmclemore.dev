@@ -8,7 +8,7 @@ import { GameState } from "@/projects/maze-generator/types";
 export default function MazeGeneratorPage() {
 	const [gameState, setGameState] = useState<GameState>("title");
 	const [startOverTrigger, setStartOverTrigger] = useState(0);
-	
+
 	const handleStartOver = () => {
 		setStartOverTrigger(prev => prev + 1);
 	};
@@ -17,16 +17,16 @@ export default function MazeGeneratorPage() {
 
 	return (
 		<div className="min-h-screen bg-background">
-			<ProjectNavigation 
+			<ProjectNavigation
 				projectTitle="Maze Generator & Solver"
 				githubUrl="https://github.com/dmclemore/dmclemore.dev"
 				onStartOver={handleStartOver}
 				showStartOver={!isStartScreen}
+				showTitle={!isStartScreen}
 			/>
 
-			{/* Maze Generator Component */}
-			<main className="pt-16 min-h-[calc(100vh-4rem)]">
-				<MazeGenerator 
+			<main className="min-h-[calc(100vh-6rem)]">
+				<MazeGenerator
 					key={startOverTrigger}
 					onGameStateChange={setGameState}
 				/>
