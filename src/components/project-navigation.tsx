@@ -29,8 +29,8 @@ export function ProjectNavigation({
 		};
 
 		checkScreenSize();
-		window.addEventListener('resize', checkScreenSize);
-		return () => window.removeEventListener('resize', checkScreenSize);
+		window.addEventListener("resize", checkScreenSize);
+		return () => window.removeEventListener("resize", checkScreenSize);
 	}, []);
 
 	const scrollToProjects = () => {
