@@ -10,6 +10,7 @@ const navigation = [
 	{ name: "Skills", id: "skills" },
 	{ name: "Projects", id: "projects" },
 	{ name: "Contact", id: "contact" },
+	{ name: "Resume", id: "resume", isExternal: true },
 ];
 
 export function Navigation() {
@@ -43,16 +44,29 @@ export function Navigation() {
 					{/* Desktop navigation */}
 					<div className="hidden md:flex items-center space-x-8">
 						{navigation.map((item, index) => (
-							<motion.button
-								key={item.name}
-								onClick={() => scrollToSection(item.id)}
-								initial={{ opacity: 0, y: -10 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ delay: index * 0.1 }}
-								className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-							>
-								{item.name}
-							</motion.button>
+							item.isExternal ? (
+								<motion.a
+									key={item.name}
+									href={`/${item.id}`}
+									initial={{ opacity: 0, y: -10 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: index * 0.1 }}
+									className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+								>
+									{item.name}
+								</motion.a>
+							) : (
+								<motion.button
+									key={item.name}
+									onClick={() => scrollToSection(item.id)}
+									initial={{ opacity: 0, y: -10 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: index * 0.1 }}
+									className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+								>
+									{item.name}
+								</motion.button>
+							)
 						))}
 						<ThemeToggle />
 					</div>
@@ -82,16 +96,27 @@ export function Navigation() {
 						className="md:hidden py-4 border-t border-border"
 					>
 						{navigation.map(item => (
-							<button
-								key={item.name}
-								onClick={() => {
-									scrollToSection(item.id);
-									setIsOpen(false);
-								}}
-								className="block px-3 py-2 text-muted-foreground hover:text-foreground transition-colors text-left w-full cursor-pointer"
-							>
-								{item.name}
-							</button>
+							item.isExternal ? (
+								<a
+									key={item.name}
+									href={`/${item.id}`}
+									onClick={() => setIsOpen(false)}
+									className="block px-3 py-2 text-muted-foreground hover:text-foreground transition-colors text-left w-full cursor-pointer"
+								>
+									{item.name}
+								</a>
+							) : (
+								<button
+									key={item.name}
+									onClick={() => {
+										scrollToSection(item.id);
+										setIsOpen(false);
+									}}
+									className="block px-3 py-2 text-muted-foreground hover:text-foreground transition-colors text-left w-full cursor-pointer"
+								>
+									{item.name}
+								</button>
+							)
 						))}
 					</motion.div>
 				)}

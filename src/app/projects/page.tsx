@@ -9,13 +9,20 @@ export default function ProjectsPage() {
 	useEffect(() => {
 		// Redirect to home page and scroll to projects section
 		router.replace("/");
-		// Small delay to ensure page loads before scrolling
-		setTimeout(() => {
+		
+		// Wait for the element to be available with retry logic
+		const scrollToProjects = () => {
 			const projectsSection = document.getElementById("projects");
 			if (projectsSection) {
 				projectsSection.scrollIntoView({ behavior: "smooth" });
+			} else {
+				// Retry after a short delay if element not found
+				setTimeout(scrollToProjects, 50);
 			}
-		}, 100);
+		};
+		
+		// Start checking after initial delay
+		setTimeout(scrollToProjects, 200);
 	}, [router]);
 
 	return (

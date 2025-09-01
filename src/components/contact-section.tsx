@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, MapPin, Calendar } from "lucide-react";
+import { Mail, Github, Linkedin, FileText, Calendar } from "lucide-react";
 
 const contactMethods = [
 	{
@@ -23,14 +23,14 @@ const contactMethods = [
 		label: "GitHub",
 		value: "dmclemore",
 		href: "https://github.com/dmclemore",
-		description: "Check out my open source work",
+		description: "Check out my personal projects",
 	},
 	{
-		icon: MapPin,
-		label: "Location",
-		value: "Seattle, WA",
-		href: null,
-		description: "Pacific Time Zone (UTC-8)",
+		icon: FileText,
+		label: "Resume",
+		value: "View & Download",
+		href: "/resume",
+		description: "Work history and skills",
 	},
 ];
 
