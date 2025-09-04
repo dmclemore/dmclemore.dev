@@ -5,6 +5,7 @@ import { ExternalLink, Github, Play } from "lucide-react";
 import { ReactNode } from "react";
 import Link from "next/link";
 import MazePreview from "./MazePreview";
+import SudokuPreview from "./SudokuPreview";
 
 interface Project {
 	id: string;
@@ -21,6 +22,17 @@ interface Project {
 
 const projects: Project[] = [
 	{
+		id: "sudoku-generator",
+		title: "Sudoku Generator & Solver",
+		description:
+			"Advanced Sudoku puzzle generator with manual solving featuring pencil marks, hints, and AI solving algorithms (logical elimination and backtracking).",
+		type: "embedded",
+		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
+		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
+		featured: true,
+		previewGif: <SudokuPreview />,
+	},
+	{
 		id: "maze-generator",
 		title: "Maze Generator & Solver",
 		description:
@@ -28,7 +40,7 @@ const projects: Project[] = [
 		type: "embedded",
 		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
 		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
-		featured: true,
+		featured: false,
 		previewGif: <MazePreview />,
 	},
 ];
@@ -63,12 +75,13 @@ function ProjectCard({ project }: { project: Project }) {
 			}`}
 		>
 			{/* Project Preview */}
-			<Link href={isEmbedded ? `/projects/${project.id}` : project.liveUrl || '#'} className="block">
+			<Link
+				href={isEmbedded ? `/projects/${project.id}` : project.liveUrl || "#"}
+				className="block"
+			>
 				<div className="aspect-video bg-muted/30 relative overflow-hidden group hover:bg-muted/40 transition-colors">
 					{isEmbedded && project.previewGif ? (
-						<div className="w-full h-full">
-							{project.previewGif}
-						</div>
+						<div className="w-full h-full">{project.previewGif}</div>
 					) : isEmbedded ? (
 						<div className="p-4 h-full">
 							<div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center border-2 border-dashed border-border group-hover:border-primary/40 transition-colors">
@@ -84,7 +97,9 @@ function ProjectCard({ project }: { project: Project }) {
 						<div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
 							<div className="text-center">
 								<ExternalLink className="h-12 w-12 text-muted-foreground group-hover:text-primary mx-auto mb-2 transition-colors" />
-								<p className="text-muted-foreground group-hover:text-foreground transition-colors">External Project</p>
+								<p className="text-muted-foreground group-hover:text-foreground transition-colors">
+									External Project
+								</p>
 							</div>
 						</div>
 					)}
@@ -148,16 +163,18 @@ function ProjectCard({ project }: { project: Project }) {
 							<Play className="h-4 w-4" />
 							<span>Try Demo</span>
 						</Link>
-					) : project.liveUrl && (
-						<a
-							href={project.liveUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md text-sm font-medium"
-						>
-							<ExternalLink className="h-4 w-4" />
-							<span>Live Demo</span>
-						</a>
+					) : (
+						project.liveUrl && (
+							<a
+								href={project.liveUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md text-sm font-medium"
+							>
+								<ExternalLink className="h-4 w-4" />
+								<span>Live Demo</span>
+							</a>
+						)
 					)}
 				</div>
 			</div>
@@ -190,13 +207,14 @@ export function ProjectsSection() {
 					initial="hidden"
 					whileInView="visible"
 					viewport={{ once: true }}
-					className={`grid gap-6 ${projects.length === 1 ? 'justify-center' : 'md:grid-cols-2 lg:grid-cols-3'}`}
+					className={`grid gap-6 ${
+						projects.length === 1
+							? "justify-center"
+							: "md:grid-cols-2 lg:grid-cols-3"
+					}`}
 				>
 					{projects.map(project => (
-						<ProjectCard 
-							key={project.id} 
-							project={project} 
-						/>
+						<ProjectCard key={project.id} project={project} />
 					))}
 				</motion.div>
 
