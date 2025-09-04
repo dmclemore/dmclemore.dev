@@ -117,7 +117,7 @@ const MazePreview: React.FC = () => {
 	}, [shouldRestart, isGenerating, startMazeGeneration]);
 
 	return (
-		<div className="relative w-full h-full bg-gradient-to-br from-muted to-secondary rounded-lg overflow-hidden">
+		<div className="relative w-full h-full bg-gradient-to-br from-muted to-secondary rounded-lg overflow-hidden group">
 			{/* Animated maze grid */}
 			<div className="absolute inset-0 flex items-center justify-center">
 				<div
@@ -156,10 +156,15 @@ const MazePreview: React.FC = () => {
 				</div>
 			</div>
 
-			{/* Play overlay */}
-			<div className="absolute inset-0 bg-background/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200">
-				<div className="bg-background/90 rounded-full p-4 shadow-lg">
-					<Play className="h-8 w-8 text-foreground ml-1" />
+			{/* Hover overlay with play icon - matching sudoku preview */}
+			<div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded">
+				<div className="text-center text-white">
+					<div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mb-2 mx-auto backdrop-blur-sm">
+						<svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+							<path d="M8 5v14l11-7z"/>
+						</svg>
+					</div>
+					<p className="text-sm font-medium">Try Interactive Demo</p>
 				</div>
 			</div>
 		</div>
