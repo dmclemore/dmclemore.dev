@@ -1,13 +1,13 @@
 import { SudokuCell, SolverStep } from "../types";
 import { isValidCellPlacement, getPossibleValues } from "./validation";
-import { delay } from "./common";
+import { delay, deepCloneGrid } from "./common";
 
 // Logical solving algorithms
 export class LogicalSolver {
 	private grid: SudokuCell[][];
 
 	constructor(grid: SudokuCell[][]) {
-		this.grid = grid.map(row => row.map(cell => ({...cell})));
+		this.grid = deepCloneGrid(grid);
 	}
 
 	// Main logical solving method
@@ -35,7 +35,7 @@ export class LogicalSolver {
 				this.grid[nakedSingle.position.y][nakedSingle.position.x].value = nakedSingle.value!;
 				this.grid[nakedSingle.position.y][nakedSingle.position.x].isHighlighted = true;
 				
-				onStep([...this.grid.map(row => [...row])], nakedSingle);
+				onStep(deepCloneGrid(this.grid), nakedSingle);
 				await delay(speed);
 				
 				this.grid[nakedSingle.position.y][nakedSingle.position.x].isHighlighted = false;
@@ -49,7 +49,7 @@ export class LogicalSolver {
 				this.grid[hiddenSingle.position.y][hiddenSingle.position.x].value = hiddenSingle.value!;
 				this.grid[hiddenSingle.position.y][hiddenSingle.position.x].isHighlighted = true;
 				
-				onStep([...this.grid.map(row => [...row])], hiddenSingle);
+				onStep(deepCloneGrid(this.grid), hiddenSingle);
 				await delay(speed);
 				
 				this.grid[hiddenSingle.position.y][hiddenSingle.position.x].isHighlighted = false;
@@ -60,7 +60,7 @@ export class LogicalSolver {
 			// Try constraint propagation
 			const elimination = this.eliminateImpossibles();
 			if (elimination) {
-				onStep([...this.grid.map(row => [...row])], elimination);
+				onStep(deepCloneGrid(this.grid), elimination);
 				await delay(speed / 2);
 				progress = true;
 				continue;
@@ -214,7 +214,7 @@ export class BacktrackingSolver {
 	private grid: SudokuCell[][];
 
 	constructor(grid: SudokuCell[][]) {
-		this.grid = grid.map(row => row.map(cell => ({...cell})));
+		this.grid = deepCloneGrid(grid);
 	}
 
 	public solve(
@@ -272,7 +272,7 @@ export class BacktrackingSolver {
 					reason: `Trying ${num} at (${currentCol + 1}, ${currentRow + 1})`
 				};
 
-				onStep([...this.grid.map(row => [...row])], step);
+				onStep(deepCloneGrid(this.grid), step);
 				await delay(speed);
 
 				// Clear highlight before recursing
@@ -293,7 +293,7 @@ export class BacktrackingSolver {
 					reason: `Backtracking from (${currentCol + 1}, ${currentRow + 1})`
 				};
 
-				onStep([...this.grid.map(row => [...row])], backtrackStep);
+				onStep(deepCloneGrid(this.grid), backtrackStep);
 				await delay(speed / 2);
 
 				this.grid[currentRow][currentCol].hasError = false;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { SudokuCell, GameState, SolvingAlgorithm, InputMode, SudokuGrid } from "../types";
 import { getPossibleValues, hasConflicts } from "../utils/validation";
+import { deepCloneGrid } from "../utils/common";
 
 interface SudokuDisplayProps {
 	grid: SudokuGrid;
@@ -87,7 +88,7 @@ const SudokuDisplay: React.FC<SudokuDisplayProps> = ({
 		if (cell.isGiven) return;
 
 		const newGrid = { ...grid };
-		const newCells = newGrid.cells.map(row => row.map(cell => ({ ...cell })));
+		const newCells = deepCloneGrid(newGrid.cells);
 
 		if (inputMode === 'pen') {
 			// Pen mode: place final answer
@@ -170,7 +171,7 @@ const SudokuDisplay: React.FC<SudokuDisplayProps> = ({
 
 		const possibles = getPossibleValues(grid.cells, selectedCell.y, selectedCell.x);
 		const newGrid = { ...grid };
-		const newCells = newGrid.cells.map(row => row.map(cell => ({ ...cell })));
+		const newCells = deepCloneGrid(newGrid.cells);
 
 		// Add possible values as pencil marks
 		possibles.forEach(num => {
@@ -188,7 +189,7 @@ const SudokuDisplay: React.FC<SudokuDisplayProps> = ({
 		if (cell.isGiven) return;
 
 		const newGrid = { ...grid };
-		const newCells = newGrid.cells.map(row => row.map(cell => ({ ...cell })));
+		const newCells = deepCloneGrid(newGrid.cells);
 		
 		newCells[selectedCell.y][selectedCell.x].value = 0;
 		newCells[selectedCell.y][selectedCell.x].pencilMarks.clear();

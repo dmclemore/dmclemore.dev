@@ -1,6 +1,6 @@
 import { SudokuCell, SudokuGrid } from "../types";
 import { isValidPlacement } from "./validation";
-import { convertToSudokuCells } from "./common";
+import { convertToSudokuCells, shuffleArray } from "./common";
 
 export const generateSudoku = (
 	clues: number,
@@ -18,12 +18,7 @@ export const generateSudoku = (
 	// Fill diagonal 3x3 boxes first (no conflicts possible)
 	const fillDiagonalBoxes = (grid: number[][]): void => {
 		for (let box = 0; box < 9; box += 3) {
-			const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-			// Fisher-Yates shuffle
-			for (let i = nums.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1));
-				[nums[i], nums[j]] = [nums[j], nums[i]];
-			}
+			const nums = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 			
 			let numIndex = 0;
 			for (let i = 0; i < 3; i++) {
@@ -40,11 +35,7 @@ export const generateSudoku = (
 			for (let col = 0; col < 9; col++) {
 				if (grid[row][col] === 0) {
 					// Try numbers 1-9 in random order for more variation
-					const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-					for (let i = nums.length - 1; i > 0; i--) {
-						const j = Math.floor(Math.random() * (i + 1));
-						[nums[i], nums[j]] = [nums[j], nums[i]];
-					}
+					const nums = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 					for (const num of nums) {
 						if (isValidPlacement(grid, row, col, num)) {
@@ -96,15 +87,12 @@ export const generateSudoku = (
 		}
 
 		// Shuffle positions
-		for (let i = positions.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[positions[i], positions[j]] = [positions[j], positions[i]];
-		}
+		const shuffledPositions = shuffleArray(positions);
 
 		let removedCount = 0;
 		const maxToRemove = 81 - targetClues;
 		
-		for (const [row, col] of positions) {
+		for (const [row, col] of shuffledPositions) {
 			if (removedCount >= maxToRemove) break;
 
 			const backup = puzzle[row][col];
