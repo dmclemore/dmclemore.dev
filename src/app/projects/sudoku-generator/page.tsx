@@ -19,7 +19,7 @@ export default function SudokuGeneratorPage() {
 		<div className="min-h-screen bg-background">
 			<ProjectNavigation
 				projectTitle="Sudoku Generator & Solver"
-				githubUrl="https://github.com/dmclemore/dmclemore.dev"
+				githubUrl="https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/sudoku-generator"
 				onStartOver={handleStartOver}
 				showStartOver={!isStartScreen}
 				showTitle={!isStartScreen}
