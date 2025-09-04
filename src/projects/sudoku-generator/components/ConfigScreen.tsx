@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SudokuConfig } from "../types";
+import { SeededRandom } from "../utils/common";
 
 interface ConfigScreenProps {
 	config: SudokuConfig;
@@ -52,13 +53,7 @@ const ConfigScreen: React.FC<ConfigScreenProps> = ({
 		// Calculate which cells should be shown based on current difficulty
 		const currentClues = difficulty === 'custom' ? customClues : difficultySettings[difficulty].clues;
 		
-		// Seeded random for consistent clue positioning
-		const seededRandom = (seed: number) => {
-			const x = Math.sin(seed) * 10000;
-			return x - Math.floor(x);
-		};
-
-		// Generate shuffled positions for clue selection
+		// Generate shuffled positions for clue selection using proper seeded random
 		const allPositions: [number, number][] = [];
 		for (let row = 0; row < 9; row++) {
 			for (let col = 0; col < 9; col++) {
@@ -67,13 +62,8 @@ const ConfigScreen: React.FC<ConfigScreenProps> = ({
 		}
 
 		const fixedSeed = 12345;
-		const shuffledPositions = [...allPositions];
-		
-		// Fisher-Yates shuffle with seeded random
-		for (let i = shuffledPositions.length - 1; i > 0; i--) {
-			const j = Math.floor(seededRandom(fixedSeed + i) * (i + 1));
-			[shuffledPositions[i], shuffledPositions[j]] = [shuffledPositions[j], shuffledPositions[i]];
-		}
+		const seededRng = new SeededRandom(fixedSeed);
+		const shuffledPositions = seededRng.shuffle(allPositions);
 
 		const cluePositions = shuffledPositions.slice(0, Math.min(currentClues, 81));
 
