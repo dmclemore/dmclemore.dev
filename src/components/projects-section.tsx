@@ -28,7 +28,8 @@ const projects: Project[] = [
 			"Advanced Sudoku puzzle generator with manual solving featuring pencil marks, hints, and AI solving algorithms (logical elimination and backtracking).",
 		type: "embedded",
 		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
-		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
+		githubUrl:
+			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/sudoku-generator",
 		featured: true,
 		previewGif: <SudokuPreview />,
 	},
@@ -39,7 +40,8 @@ const projects: Project[] = [
 			"Interactive maze generator using recursive backtracking with manual solving and AI pathfinding algorithms (A* and BFS).",
 		type: "embedded",
 		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
-		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
+		githubUrl:
+			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/maze-generator",
 		featured: false,
 		previewGif: <MazePreview />,
 	},

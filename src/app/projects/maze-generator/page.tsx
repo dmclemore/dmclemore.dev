@@ -19,7 +19,7 @@ export default function MazeGeneratorPage() {
 		<div className="min-h-screen bg-background">
 			<ProjectNavigation
 				projectTitle="Maze Generator & Solver"
-				githubUrl="https://github.com/dmclemore/dmclemore.dev"
+				githubUrl="https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/maze-generator"
 				onStartOver={handleStartOver}
 				showStartOver={!isStartScreen}
 				showTitle={!isStartScreen}
