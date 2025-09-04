@@ -22,17 +22,6 @@ interface Project {
 
 const projects: Project[] = [
 	{
-		id: "maze-generator",
-		title: "Maze Generator & Solver",
-		description:
-			"Interactive maze generator using recursive backtracking with manual solving and AI pathfinding algorithms (A* and BFS).",
-		type: "embedded",
-		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
-		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
-		featured: false,
-		previewGif: <MazePreview />,
-	},
-	{
 		id: "sudoku-generator",
 		title: "Sudoku Generator & Solver",
 		description:
@@ -42,6 +31,17 @@ const projects: Project[] = [
 		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
 		featured: true,
 		previewGif: <SudokuPreview />,
+	},
+	{
+		id: "maze-generator",
+		title: "Maze Generator & Solver",
+		description:
+			"Interactive maze generator using recursive backtracking with manual solving and AI pathfinding algorithms (A* and BFS).",
+		type: "embedded",
+		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
+		githubUrl: "https://github.com/dmclemore/dmclemore.dev",
+		featured: false,
+		previewGif: <MazePreview />,
 	},
 ];
 
