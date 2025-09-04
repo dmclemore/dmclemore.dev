@@ -120,8 +120,6 @@ export const generateSudoku = (
 		return puzzle;
 	};
 
-	// Use shared conversion function
-
 	// Main generation process
 	const generateStep = async (): Promise<void> => {
 		try {
