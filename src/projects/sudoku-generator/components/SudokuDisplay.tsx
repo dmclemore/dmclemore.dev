@@ -198,6 +198,12 @@ const SudokuDisplay: React.FC<SudokuDisplayProps> = ({
 		onGridUpdate(newGrid);
 	};
 
+	const getCellDisplayValue = (cell: SudokuCell, gameState: GameState): string => {
+		if (cell.value === 0) return '';
+		if (gameState === "generating") return '?';
+		return cell.value.toString();
+	};
+
 	const isSolved = (cells: SudokuCell[][]): boolean => {
 		for (let row = 0; row < 9; row++) {
 			for (let col = 0; col < 9; col++) {
@@ -473,7 +479,7 @@ const SudokuDisplay: React.FC<SudokuDisplayProps> = ({
 										onClick={() => handleCellClick(x, y)}
 									>
 										<div className="absolute inset-0 flex items-center justify-center font-medium text-lg">
-{gameState === "generating" && cell.value !== 0 ? '?' : (cell.value !== 0 ? cell.value : '')}
+											{getCellDisplayValue(cell, gameState)}
 										</div>
 {renderPencilMarks(cell)}
 									</div>
