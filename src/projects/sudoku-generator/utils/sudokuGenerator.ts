@@ -13,7 +13,6 @@ export const generateSudoku = (
 		return Array(9).fill(null).map(() => Array(9).fill(0));
 	};
 
-	// Use shared validation function
 
 	// Fill diagonal 3x3 boxes first (no conflicts possible)
 	const fillDiagonalBoxes = (grid: number[][]): void => {
