@@ -12,6 +12,9 @@ interface ProjectNavigationProps {
 	onStartOver?: () => void;
 	showStartOver?: boolean;
 	showTitle?: boolean;
+	switchButtonText?: string;
+	onSwitchClick?: () => void;
+	showSwitchButton?: boolean;
 }
 
 export function ProjectNavigation({
@@ -20,6 +23,9 @@ export function ProjectNavigation({
 	onStartOver,
 	showStartOver = false,
 	showTitle = true,
+	switchButtonText,
+	onSwitchClick,
+	showSwitchButton = false,
 }: ProjectNavigationProps) {
 	const [isLargeScreen, setIsLargeScreen] = useState(false);
 
@@ -75,6 +81,16 @@ export function ProjectNavigation({
 						animate={{ opacity: 1, y: 0 }}
 						className="flex items-center space-x-3"
 					>
+						{/* Switch Button - Project specific */}
+						{showSwitchButton && onSwitchClick && switchButtonText && (
+							<button
+								onClick={onSwitchClick}
+								className="hidden md:block px-3 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground transition-colors rounded text-sm font-medium"
+							>
+								{switchButtonText}
+							</button>
+						)}
+
 						{/* Start Over Button - Hidden on mobile */}
 						{showStartOver && onStartOver && (
 							<button
@@ -103,21 +119,31 @@ export function ProjectNavigation({
 				</div>
 			</div>
 
-			{/* Mobile Start Over Button - Below nav */}
-			{showStartOver && onStartOver && (
+			{/* Mobile Start Over and Switch Buttons - Below nav */}
+			{(showStartOver || showSwitchButton) && (
 				<motion.div
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
 					className="md:hidden bg-background/80 backdrop-blur-sm border-b border-border"
 				>
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-						<div className="py-3">
-							<button
-								onClick={onStartOver}
-								className="w-full px-4 py-2 bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors rounded text-sm font-medium"
-							>
-								Start Over
-							</button>
+						<div className="py-3 space-y-2">
+							{showSwitchButton && onSwitchClick && switchButtonText && (
+								<button
+									onClick={onSwitchClick}
+									className="w-full px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground transition-colors rounded text-sm font-medium"
+								>
+									{switchButtonText}
+								</button>
+							)}
+							{showStartOver && onStartOver && (
+								<button
+									onClick={onStartOver}
+									className="w-full px-4 py-2 bg-muted/80 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors rounded text-sm font-medium"
+								>
+									Start Over
+								</button>
+							)}
 						</div>
 					</div>
 				</motion.div>

@@ -6,6 +6,8 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import MazePreview from "./MazePreview";
 import SudokuPreview from "./SudokuPreview";
+import QueueStackPreview from "./QueueStackPreview";
+import PreviewOverlay from "./PreviewOverlay";
 
 interface Project {
 	id: string;
@@ -32,6 +34,18 @@ const projects: Project[] = [
 			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/sudoku-generator",
 		featured: true,
 		previewGif: <SudokuPreview />,
+	},
+	{
+		id: "queue-stack",
+		title: "Queue & Stack Visualizer",
+		description:
+			"Interactive data structure visualizer featuring animated queue (FIFO) and stack (LIFO) operations with educational content and real-world examples.",
+		type: "embedded",
+		technologies: ["React", "TypeScript", "Tailwind CSS", "Data Structures"],
+		githubUrl:
+			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/queue-stack",
+		featured: false,
+		previewGif: <QueueStackPreview />,
 	},
 	{
 		id: "maze-generator",
@@ -83,7 +97,10 @@ function ProjectCard({ project }: { project: Project }) {
 			>
 				<div className="aspect-video bg-muted/30 relative overflow-hidden group hover:bg-muted/40 transition-colors">
 					{isEmbedded && project.previewGif ? (
-						<div className="w-full h-full">{project.previewGif}</div>
+						<>
+							<div className="w-full h-full">{project.previewGif}</div>
+							<PreviewOverlay />
+						</>
 					) : isEmbedded ? (
 						<div className="p-4 h-full">
 							<div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center border-2 border-dashed border-border group-hover:border-primary/40 transition-colors">

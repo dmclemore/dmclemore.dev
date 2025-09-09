@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Play } from "lucide-react";
 import { getCellStyle } from "../projects/maze-generator/utils/mazeDisplay";
 import { generateMaze } from "../projects/maze-generator/utils/mazeGenerator";
+import PreviewOverlay from "./PreviewOverlay";
 
 interface Cell {
 	x: number;
@@ -156,17 +157,7 @@ const MazePreview: React.FC = () => {
 				</div>
 			</div>
 
-			{/* Hover overlay with play icon - matching sudoku preview */}
-			<div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded">
-				<div className="text-center text-white">
-					<div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mb-2 mx-auto backdrop-blur-sm">
-						<svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-							<path d="M8 5v14l11-7z"/>
-						</svg>
-					</div>
-					<p className="text-sm font-medium">Try Interactive Demo</p>
-				</div>
-			</div>
+			<PreviewOverlay />
 		</div>
 	);
 };
