@@ -54,7 +54,7 @@ export function HeroSection() {
 						<Github className="h-6 w-6" />
 					</a>
 					<a
-						href="https://linkedin.com/in/desmond-mclemore"
+						href="https://linkedin.com/in/desmondmclemore"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="p-3 rounded-full bg-secondary hover:bg-accent hover:text-accent-foreground transition-colors"
