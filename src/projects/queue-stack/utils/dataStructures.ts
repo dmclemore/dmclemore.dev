@@ -65,14 +65,14 @@ export class Stack<T> {
 }
 
 export const generateQueueItem = (): QueueItem => ({
-	id: `person-${Date.now()}-${Math.random()}`,
+	id: `person-${crypto.randomUUID()}`,
 	type: 'person',
 	variant: Math.floor(Math.random() * 6) + 1, // 6 different stick figure variants
 	animating: false
 });
 
 export const generateStackItem = (): StackItem => ({
-	id: `pancake-${Date.now()}-${Math.random()}`,
+	id: `pancake-${crypto.randomUUID()}`,
 	type: 'pancake',
 	variant: Math.floor(Math.random() * 8) + 1, // 8 different pancake variants
 	animating: false
