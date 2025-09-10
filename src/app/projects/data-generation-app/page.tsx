@@ -5,6 +5,9 @@ import { ProjectNavigation } from "@/components/project-navigation";
 import { ChevronDown, ChevronUp, Database, Terminal, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Type for data records
+type DataRecord = Record<string, string | number | boolean>;
+
 // Import the actual generated data
 import ecommerceData from "../../../data/ecommerce_demo.json";
 import healthcareData from "../../../data/healthcare_demo.json";
@@ -108,20 +111,20 @@ function CollapsibleDataset({
 															className="text-left p-3 font-medium text-muted-foreground"
 														>
 															{key
-																.replace("_", " ")
+																.replace(/_/g, " ")
 																.replace(/\b\w/g, l => l.toUpperCase())}
 														</th>
 													))}
 											</tr>
 										</thead>
 										<tbody>
-											{dataset.data.map((record: any, index: number) => (
+											{dataset.data.map((record: DataRecord, index: number) => (
 												<tr
 													key={index}
 													className="border-b border-border/50 hover:bg-muted/20"
 												>
 													{Object.values(record).map(
-														(value: any, cellIndex: number) => (
+														(value: string | number | boolean, cellIndex: number) => (
 															<td
 																key={cellIndex}
 																className="p-3 text-foreground"

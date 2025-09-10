@@ -3,10 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Type for generated data records
+type GeneratedDataRecord = Record<string, string | number | boolean>;
+
 export default function DataGenerationPreview() {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [typedCommand, setTypedCommand] = useState("");
-	const [generatedData, setGeneratedData] = useState<any[]>([]);
+	const [generatedData, setGeneratedData] = useState<GeneratedDataRecord[]>([]);
 
 	// Sample commands to cycle through
 	const commands = [

@@ -19,6 +19,7 @@ interface Project {
 	previewGif?: ReactNode;
 	featured?: boolean;
 	overlayText?: string;
+	buttonText?: string;
 }
 
 const projects: Project[] = [
@@ -32,6 +33,7 @@ const projects: Project[] = [
 		featured: true,
 		previewGif: <DataGenerationPreview />,
 		overlayText: "View Sample Data",
+		buttonText: "View Sample",
 	},
 	{
 		id: "queue-stack",
@@ -43,6 +45,7 @@ const projects: Project[] = [
 			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/queue-stack",
 		featured: false,
 		previewGif: <QueueStackPreview />,
+		buttonText: "Try Demo",
 	},
 	{
 		id: "maze-generator",
@@ -54,6 +57,7 @@ const projects: Project[] = [
 			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/maze-generator",
 		featured: false,
 		previewGif: <MazePreview />,
+		buttonText: "Try Demo",
 	},
 	{
 		id: "sudoku-generator",
@@ -65,6 +69,7 @@ const projects: Project[] = [
 			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/sudoku-generator",
 		featured: true,
 		previewGif: <SudokuPreview />,
+		buttonText: "Try Demo",
 	},
 ];
 
@@ -159,11 +164,7 @@ function ProjectCard({ project }: { project: Project }) {
 						className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md text-sm font-medium"
 					>
 						<Play className="h-4 w-4" />
-						<span>
-							{project.id === "data-generation-app"
-								? "View Sample"
-								: "Try Demo"}
-						</span>
+						<span>{project.buttonText || "Try Demo"}</span>
 					</Link>
 				</div>
 			</div>
