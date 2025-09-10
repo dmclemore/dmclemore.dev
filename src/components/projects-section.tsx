@@ -1,46 +1,43 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Play } from "lucide-react";
+import { Github, Play } from "lucide-react";
 import { ReactNode } from "react";
 import Link from "next/link";
 import MazePreview from "./MazePreview";
 import SudokuPreview from "./SudokuPreview";
 import QueueStackPreview from "./QueueStackPreview";
+import DataGenerationPreview from "./DataGenerationPreview";
 import PreviewOverlay from "./PreviewOverlay";
 
 interface Project {
 	id: string;
 	title: string;
 	description: string;
-	type: "embedded" | "external";
 	technologies: string[];
 	githubUrl?: string;
-	liveUrl?: string;
-	image?: string;
 	previewGif?: ReactNode;
 	featured?: boolean;
+	overlayText?: string;
 }
 
 const projects: Project[] = [
 	{
-		id: "sudoku-generator",
-		title: "Sudoku Generator & Solver",
+		id: "data-generation-app",
+		title: "AI-Powered Synthetic Data Generator",
 		description:
-			"Advanced Sudoku puzzle generator with manual solving featuring pencil marks, hints, and AI solving algorithms (logical elimination and backtracking).",
-		type: "embedded",
-		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
-		githubUrl:
-			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/sudoku-generator",
+			"Production-ready Python CLI tool that generates realistic datasets up to 50K records using OpenAI. Features intelligent duplicate detection, batch processing, and industry-specific contexts with advanced similarity algorithms.",
+		technologies: ["Python", "OpenAI API", "Pandas", "CLI", "Data Processing"],
+		githubUrl: "https://github.com/dmclemore/data-generation-app",
 		featured: true,
-		previewGif: <SudokuPreview />,
+		previewGif: <DataGenerationPreview />,
+		overlayText: "View Sample Data",
 	},
 	{
 		id: "queue-stack",
 		title: "Queue & Stack Visualizer",
 		description:
 			"Interactive data structure visualizer featuring animated queue (FIFO) and stack (LIFO) operations with educational content and real-world examples.",
-		type: "embedded",
 		technologies: ["React", "TypeScript", "Tailwind CSS", "Data Structures"],
 		githubUrl:
 			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/queue-stack",
@@ -52,12 +49,22 @@ const projects: Project[] = [
 		title: "Maze Generator & Solver",
 		description:
 			"Interactive maze generator using recursive backtracking with manual solving and AI pathfinding algorithms (A* and BFS).",
-		type: "embedded",
 		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
 		githubUrl:
 			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/maze-generator",
 		featured: false,
 		previewGif: <MazePreview />,
+	},
+	{
+		id: "sudoku-generator",
+		title: "Sudoku Generator & Solver",
+		description:
+			"Advanced Sudoku puzzle generator with manual solving featuring pencil marks, hints, and AI solving algorithms (logical elimination and backtracking).",
+		technologies: ["React", "TypeScript", "Tailwind CSS", "Algorithms"],
+		githubUrl:
+			"https://github.com/dmclemore/dmclemore.dev/tree/main/src/projects/sudoku-generator",
+		featured: true,
+		previewGif: <SudokuPreview />,
 	},
 ];
 
@@ -81,8 +88,6 @@ const itemVariants = {
 };
 
 function ProjectCard({ project }: { project: Project }) {
-	const isEmbedded = project.type === "embedded";
-
 	return (
 		<motion.div
 			variants={itemVariants}
@@ -91,17 +96,14 @@ function ProjectCard({ project }: { project: Project }) {
 			}`}
 		>
 			{/* Project Preview */}
-			<Link
-				href={isEmbedded ? `/projects/${project.id}` : project.liveUrl || "#"}
-				className="block"
-			>
+			<Link href={`/projects/${project.id}`} className="block">
 				<div className="aspect-video bg-muted/30 relative overflow-hidden group hover:bg-muted/40 transition-colors">
-					{isEmbedded && project.previewGif ? (
+					{project.previewGif ? (
 						<>
 							<div className="w-full h-full">{project.previewGif}</div>
-							<PreviewOverlay />
+							<PreviewOverlay text={project.overlayText} />
 						</>
-					) : isEmbedded ? (
+					) : (
 						<div className="p-4 h-full">
 							<div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center border-2 border-dashed border-border group-hover:border-primary/40 transition-colors">
 								<div className="text-center">
@@ -112,29 +114,7 @@ function ProjectCard({ project }: { project: Project }) {
 								</div>
 							</div>
 						</div>
-					) : (
-						<div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-							<div className="text-center">
-								<ExternalLink className="h-12 w-12 text-muted-foreground group-hover:text-primary mx-auto mb-2 transition-colors" />
-								<p className="text-muted-foreground group-hover:text-foreground transition-colors">
-									External Project
-								</p>
-							</div>
-						</div>
 					)}
-
-					{/* Project Type Badge */}
-					<div className="absolute top-4 right-4">
-						<span
-							className={`px-3 py-1 rounded-full text-xs font-medium ${
-								isEmbedded
-									? "bg-primary/10 text-primary border border-primary/20"
-									: "bg-accent/10 text-accent border border-accent/20"
-							}`}
-						>
-							{isEmbedded ? "Try it now" : "View project"}
-						</span>
-					</div>
 				</div>
 			</Link>
 
@@ -174,27 +154,17 @@ function ProjectCard({ project }: { project: Project }) {
 						</a>
 					)}
 
-					{isEmbedded ? (
-						<Link
-							href={`/projects/${project.id}`}
-							className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md text-sm font-medium"
-						>
-							<Play className="h-4 w-4" />
-							<span>Try Demo</span>
-						</Link>
-					) : (
-						project.liveUrl && (
-							<a
-								href={project.liveUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md text-sm font-medium"
-							>
-								<ExternalLink className="h-4 w-4" />
-								<span>Live Demo</span>
-							</a>
-						)
-					)}
+					<Link
+						href={`/projects/${project.id}`}
+						className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md text-sm font-medium"
+					>
+						<Play className="h-4 w-4" />
+						<span>
+							{project.id === "data-generation-app"
+								? "View Sample"
+								: "Try Demo"}
+						</span>
+					</Link>
 				</div>
 			</div>
 		</motion.div>

@@ -4,7 +4,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Play } from "lucide-react";
 import { getCellStyle } from "../projects/maze-generator/utils/mazeDisplay";
 import { generateMaze } from "../projects/maze-generator/utils/mazeGenerator";
-import PreviewOverlay from "./PreviewOverlay";
 
 interface Cell {
 	x: number;
@@ -157,7 +156,6 @@ const MazePreview: React.FC = () => {
 				</div>
 			</div>
 
-			<PreviewOverlay />
 		</div>
 	);
 };
