@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PreviewOverlay from './PreviewOverlay';
 
 interface SudokuPreviewProps {
   className?: string;
@@ -126,7 +125,6 @@ const SudokuPreview: React.FC<SudokuPreviewProps> = ({ className = '' }) => {
         )}
       </div>
       
-      <PreviewOverlay />
     </div>
   );
 };

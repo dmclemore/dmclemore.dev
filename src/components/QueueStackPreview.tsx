@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import PreviewOverlay from "./PreviewOverlay";
 
 export default function QueueStackPreview() {
 	const [currentDemo, setCurrentDemo] = useState<'queue' | 'stack'>('queue');
@@ -59,7 +58,6 @@ export default function QueueStackPreview() {
 
 	return (
 		<div className="w-full h-full bg-muted/30 relative overflow-hidden group">
-			<PreviewOverlay />
 			
 			<AnimatePresence mode="wait">
 				{currentDemo === 'queue' ? (

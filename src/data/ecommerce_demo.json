@@ -1,0 +1,202 @@
+[
+  {
+    "customer_id":"4bfae3b6-4551-4c9a-9d0e-9a4b8f5c9f53",
+    "name":"Alice Johnson",
+    "email":"alice.johnson@example.com",
+    "age":30,
+    "total_spent":150.75,
+    "category_preference":"clothing"
+  },
+  {
+    "customer_id":"a7a6a7d0-9934-4e5f-8c9b-8f1e60bbf5f6",
+    "name":"Mark Thompson",
+    "email":"mark.thompson@example.com",
+    "age":45,
+    "total_spent":320.5,
+    "category_preference":"electronics"
+  },
+  {
+    "customer_id":"b2c1c4d5-1e2e-4b56-b0f4-4c2e6b0f7e1b",
+    "name":"Sophia Martinez",
+    "email":"sophia.martinez@example.com",
+    "age":28,
+    "total_spent":58.9,
+    "category_preference":"books"
+  },
+  {
+    "customer_id":"f4f1f4d6-7895-40d0-89f8-6e7b3e2c4c73",
+    "name":"James Smith",
+    "email":"james.smith@example.com",
+    "age":36,
+    "total_spent":75.0,
+    "category_preference":"home"
+  },
+  {
+    "customer_id":"c8b2a6f1-af2e-4c1c-9f60-8d5cbb6d6c3e",
+    "name":"Emily Davis",
+    "email":"emily.davis@example.com",
+    "age":22,
+    "total_spent":45.0,
+    "category_preference":"clothing"
+  },
+  {
+    "customer_id":"e4fa9c4e-8d7f-41b5-8b4f-6b8f8a9c4e6a",
+    "name":"Michael Brown",
+    "email":"michael.brown@example.com",
+    "age":39,
+    "total_spent":200.0,
+    "category_preference":"electronics"
+  },
+  {
+    "customer_id":"b3e5c4d5-4a2b-4e2f-8b3e-5d5c7b6c3f9b",
+    "name":"Liam Wilson",
+    "email":"liam.wilson@example.com",
+    "age":32,
+    "total_spent":110.25,
+    "category_preference":"books"
+  },
+  {
+    "customer_id":"d3e8f4c1-6c4f-4f5b-9d0c-5a8c4b4f7e2f",
+    "name":"Olivia Garcia",
+    "email":"olivia.garcia@example.com",
+    "age":27,
+    "total_spent":220.0,
+    "category_preference":"home"
+  },
+  {
+    "customer_id":"c9d8c6e2-1a3a-4f6b-a4f1-4e7b5e9d3c8f",
+    "name":"Noah Johnson",
+    "email":"noah.johnson@example.com",
+    "age":41,
+    "total_spent":150.0,
+    "category_preference":"electronics"
+  },
+  {
+    "customer_id":"d6c9b5a4-2e1d-4a9b-8f8a-8e5b5c8e6f3d",
+    "name":"Isabella Lee",
+    "email":"isabella.lee@example.com",
+    "age":25,
+    "total_spent":90.0,
+    "category_preference":"clothing"
+  },
+  {
+    "customer_id":"b3e8d7f1-3e4c-4f9b-b2e3-7d6c9b0d4e2f",
+    "name":"Lucas Martinez",
+    "email":"lucas.martinez@example.com",
+    "age":36,
+    "total_spent":320.0,
+    "category_preference":"books"
+  },
+  {
+    "customer_id":"c5d2e6f9-4a1d-4e3f-b0e2-8d3f5a5c7b4a",
+    "name":"Amelia Anderson",
+    "email":"amelia.anderson@example.com",
+    "age":29,
+    "total_spent":120.5,
+    "category_preference":"home"
+  },
+  {
+    "customer_id":"f2a4a6d8-89c3-4d6f-9a1f-8c9e5b6e7c9f",
+    "name":"Ethan Davis",
+    "email":"ethan.davis@example.com",
+    "age":34,
+    "total_spent":300.0,
+    "category_preference":"electronics"
+  },
+  {
+    "customer_id":"a8c1b3f7-7c2d-4f5c-a9e2-9d8b7c6d1f9e",
+    "name":"Charlotte Wilson",
+    "email":"charlotte.wilson@example.com",
+    "age":31,
+    "total_spent":70.0,
+    "category_preference":"clothing"
+  },
+  {
+    "customer_id":"e7b5c4a1-4f2e-4d6b-8c5f-5a2f8d4c3f8b",
+    "name":"Mason Lee",
+    "email":"mason.lee@example.com",
+    "age":40,
+    "total_spent":500.0,
+    "category_preference":"books"
+  },
+  {
+    "customer_id":"d2c4b1a2-5f8c-4b3e-8b0c-4d9f7a5f8b3e",
+    "name":"Ava Clark",
+    "email":"ava.clark@example.com",
+    "age":26,
+    "total_spent":80.0,
+    "category_preference":"home"
+  },
+  {
+    "customer_id":"a4e5f2d1-8b3e-4c5b-b5f0-4a9c7e3e6c7a",
+    "name":"Sofia Lewis",
+    "email":"sofia.lewis@example.com",
+    "age":23,
+    "total_spent":130.75,
+    "category_preference":"electronics"
+  },
+  {
+    "customer_id":"f4d7b8a6-2e3f-4e4b-b9c1-4b7c8d9e6f2e",
+    "name":"Henry Wright",
+    "email":"henry.wright@example.com",
+    "age":38,
+    "total_spent":250.0,
+    "category_preference":"clothing"
+  },
+  {
+    "customer_id":"e7f1c9d2-3b2e-4f9a-a4e5-9a8d2b6b3f8b",
+    "name":"Ella Hall",
+    "email":"ella.hall@example.com",
+    "age":29,
+    "total_spent":65.0,
+    "category_preference":"books"
+  },
+  {
+    "customer_id":"e4b7c4f9-8c2e-4c7a-b1f9-4c1e6b3a5f2d",
+    "name":"Aiden Young",
+    "email":"aiden.young@example.com",
+    "age":33,
+    "total_spent":175.0,
+    "category_preference":"home"
+  },
+  {
+    "customer_id":"c5d0b8a1-2e4f-4c2b-b7d8-3e9f5a2b4c9c",
+    "name":"Zoe Allen",
+    "email":"zoe.allen@example.com",
+    "age":37,
+    "total_spent":90.0,
+    "category_preference":"electronics"
+  },
+  {
+    "customer_id":"f7d5b9c4-1e3a-4e5b-bb0e-7d2b3f4e6f1c",
+    "name":"Jack Harris",
+    "email":"jack.harris@example.com",
+    "age":42,
+    "total_spent":140.0,
+    "category_preference":"clothing"
+  },
+  {
+    "customer_id":"d8f3c5e7-9b1a-4f8e-8c1f-8a6c4d5b7f6e",
+    "name":"Mia Walker",
+    "email":"mia.walker@example.com",
+    "age":24,
+    "total_spent":85.25,
+    "category_preference":"books"
+  },
+  {
+    "customer_id":"a3c5b7e2-1f2e-4f3f-a4d5-7f6b4c1e7b2d",
+    "name":"William King",
+    "email":"william.king@example.com",
+    "age":47,
+    "total_spent":999.99,
+    "category_preference":"home"
+  },
+  {
+    "customer_id":"b1d5c8a6-7e3c-4e2d-8c5f-8d3b5f2e9f1c",
+    "name":"Scarlett Scott",
+    "email":"scarlett.scott@example.com",
+    "age":30,
+    "total_spent":180.0,
+    "category_preference":"electronics"
+  }
+]

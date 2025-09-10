@@ -55,7 +55,7 @@ export function ProjectNavigation({
 					>
 						<button
 							onClick={scrollToProjects}
-							className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
+							className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
 						>
 							<ArrowLeft className="h-4 w-4" />
 							<span>Back to Projects</span>
